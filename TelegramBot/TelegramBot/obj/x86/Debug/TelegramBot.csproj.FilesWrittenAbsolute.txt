@@ -1,0 +1,7 @@
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/bin/Debug/TelegramBot.pdb
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/bin/Debug/TelegramBot.exe
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/obj/x86/Debug/TelegramBot.exe
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/obj/x86/Debug/TelegramBot.pdb
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/bin/Debug/Json.dll
+/home/suriknik/Projects/Telegram_Bot/TelegramBot/TelegramBot/bin/Debug/CloudrailSI.dll

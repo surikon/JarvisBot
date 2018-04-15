@@ -1,0 +1,738 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Telegram.Bot.Framework</name>
+    </assembly>
+    <members>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IBot">
+            <summary>
+            A wrapper around TelegramBot class. Used to make calls to the Bot API
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IBot.UserName">
+            <summary>
+            Gets Bot's user name
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IBot.Client">
+            <summary>
+            Instance of Telegram bot client
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IBotManager`1">
+            <summary>
+            Manages bot and sends updates to handlers
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IBotManager`1.WebhookUrl">
+            <summary>
+            Gets webhook's url from bot options provided
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IBotManager`1.HandleUpdateAsync(Telegram.Bot.Types.Update)">
+            <summary>
+            Handle the update
+            </summary>
+            <param name="update">Update to be handled</param>
+            <returns></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IBotManager`1.GetAndHandleNewUpdatesAsync">
+            <summary>
+            Pulls the updates from Telegram if any and passes them to handlers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IBotManager`1.SetWebhookStateAsync(System.Boolean)">
+            <summary>
+            Enables or disables the webhook for this bot
+            </summary>
+            <param name="enabled">Whether webhook should be set or deleted</param>
+            <remarks>
+            Webhook url will be retrieved from bot's <see cref="T:Telegram.Bot.Framework.BotOptions`1">options</see>.
+            Disabling webhook means user wants to use long polling method to get updates.
+            </remarks>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.ICommand`1">
+            <summary>
+            A Telegram bot command such as /start
+            </summary>
+            <typeparam name="TCommandArgs">Type of the command argument this command accepts</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.ICommand`1.Name">
+            <summary>
+            Gets this command's name without leading '/'
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.ICommand`1.HandleCommand(Telegram.Bot.Types.Update,`0)">
+            <summary>
+            Handle the command update
+            </summary>
+            <param name="update">Command update to be handled</param>
+            <param name="args">Command arguments</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.ICommandArgs">
+            <summary>
+            Stores arguments for a bot command
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.ICommandArgs.RawInput">
+            <summary>
+            Raw user's text input
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.ICommandArgs.ArgsInput">
+            <summary>
+            Text input whithout the command part
+            </summary>
+            <example>
+            "argument" in "/command@bot argument"
+            </example>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IGameHandler">
+            <summary>
+            Update handler for Telegram game updates and game Score requests from game HTML5 page
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IGameHandler.ShortName">
+            <summary>
+            Game's short name
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IGameHandler.Options">
+            <summary>
+            Game configuration options
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IGameHandler.SetGameScoreAsync(Telegram.Bot.Framework.Abstractions.IBot,System.String,System.Int32)">
+            <summary>
+            Set game score for user based on encrypted playerid
+            </summary>
+            <param name="bot">Instance of the bot</param>
+            <param name="playerid">Encoded and protected player id</param>
+            <param name="score">User's score</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IGameHandler.GetHighestScoresAsync(Telegram.Bot.Framework.Abstractions.IBot,System.String)">
+            <summary>
+            Get game scores for chat based on encrypted playerid
+            </summary>
+            <param name="bot">Instance of the bot</param>
+            <param name="playerid">Encoded and protected player id</param>
+            <returns>Array of scores for chat</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IUpdateHandler">
+            <summary>
+            Processes an update
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IUpdateHandler.CanHandleUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Indicates whether this handler should receive the update for handling by quickly checking
+            the update type such as text, photo, or etc.
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">Update for the bot</param>
+            <returns><value>true</value> if this handler should get the update; otherwise <value>false</value></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IUpdateHandler.HandleUpdateAsync(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Handles the update for bot. This method will be called only if CanHandleUpdate returns <value>true</value>
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">The update to be handled</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IUpdateHandlersAccessor`1">
+            <summary>
+            Provides a list of update handlers for the bot
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.Abstractions.IUpdateHandlersAccessor`1.UpdateHandlers">
+            <summary>
+            Gets a list of update handlers for the bot
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.IUpdateParser`1">
+            <summary>
+            Responsible for quickly parsing the updates and finding the handlers for them
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Abstractions.IUpdateParser`1.FindHandlersForUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Finds update handlers for this specific bot update
+            </summary>
+            <param name="bot">Instance of bot</param>
+            <param name="update">Update to be checked for handling</param>
+            <returns>List of update handlers for the bot able to handle that update</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Abstractions.UpdateHandlingResult">
+            <summary>
+            Indicates the result of an update processing action
+            </summary>
+        </member>
+        <member name="F:Telegram.Bot.Framework.Abstractions.UpdateHandlingResult.Continue">
+            <summary>
+            Handling the update should continue with the next available handler
+            </summary>
+        </member>
+        <member name="F:Telegram.Bot.Framework.Abstractions.UpdateHandlingResult.Handled">
+            <summary>
+            Update is handled completely
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.BotBase`1">
+            <summary>
+            Base class for implementing Bots
+            </summary>
+            <typeparam name="TBot">Type of Bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotBase`1.UserName">
+            <summary>
+            Gets Bot's user name
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotBase`1.Client">
+            <summary>
+            Instance of Telegram bot client
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotBase`1.BotOptions">
+            <summary>
+            Options used to the configure the bot instance
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotBase`1.#ctor(Microsoft.Extensions.Options.IOptions{Telegram.Bot.Framework.BotOptions{`0}})">
+            <summary>
+            Initializes a new Bot
+            </summary>
+            <param name="botOptions">Options used to configure the bot</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotBase`1.HandleUnknownUpdate(Telegram.Bot.Types.Update)">
+            <summary>
+            Responsible for handling bot updates that don't have any handler
+            </summary>
+            <param name="update"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotBase`1.HandleFaultedUpdate(Telegram.Bot.Types.Update,System.Exception)">
+            <summary>
+            Receives the update when the hanlding process throws an exception for the update
+            </summary>
+            <param name="update"></param>
+            <param name="e">Exception thrown while processing the update</param>
+            <returns></returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.BotGameOption">
+            <summary>
+            Telegram game options
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotGameOption.ShortName">
+            <summary>
+            Game's short name
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotGameOption.Url">
+            <summary>
+            Url to the game's HTML5 page
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotGameOption.ScoresUrl">
+            <summary>
+            Game's callback url for getting or setting high scores
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.BotManager`1">
+            <summary>
+            Manages bot and sends updates to handlers
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotManager`1.WebhookUrl">
+            <summary>
+            Gets webhook's url from bot options provided
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotManager`1.Bot">
+            <summary>
+            Instance of bot under management
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotManager`1.BotGameOptions">
+            <summary>
+            Array of game options for this bot's games
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.#ctor(`0,Telegram.Bot.Framework.Abstractions.IUpdateParser{`0},Microsoft.Extensions.Options.IOptions{Telegram.Bot.Framework.BotOptions{`0}})">
+            <summary>
+            Initializes a new Bot Manager
+            </summary>
+            <param name="bot">Bot to be managed</param>
+            <param name="updateParser">List of update parsers for the bot</param>
+            <param name="botOptions">Options used to configure the bot</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.HandleUpdateAsync(Telegram.Bot.Types.Update)">
+            <summary>
+            Handle the update
+            </summary>
+            <param name="update">Update to be handled</param>
+            <returns></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.GetAndHandleNewUpdatesAsync">
+            <summary>
+            Pulls the updates from Telegram if any and passes them to handlers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.SetWebhookStateAsync(System.Boolean)">
+            <summary>
+            Enables or disables the webhook for this bot
+            </summary>
+            <param name="enabled">Whether webhook should be set or deleted</param>
+            <remarks>
+            Webhook url will be retrieved from bot's <see cref="T:Telegram.Bot.Framework.BotOptions`1"/>.
+            Disabling webhook means user wants to use long polling method to get updates.
+            </remarks>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.TryFindGameHandler(System.String)">
+            <summary>
+            Finds a handler for game by its short name
+            </summary>
+            <param name="gameShortName">Game's short name</param>
+            <returns>
+            A tuple with Success indicating presense of a game handler, and GameHandler, instance of
+            game handler for that game
+            </returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.BotManager`1.ReplaceGameUrlTokens(System.String,System.String)">
+            <summary>
+            Replaces tokens, if any, in a game url
+            </summary>
+            <param name="urlFormat">A url with possibly tokens such as {game}</param>
+            <param name="gameShortName">Game's short name</param>
+            <returns>A url with all tokens replaced by their respective values</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.BotOptions`1">
+            <summary>
+            Configurations for the bot
+            </summary>
+            <typeparam name="TBot">Type of Bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotOptions`1.ApiToken">
+            <summary>
+            Telegram API token
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotOptions`1.BotUserName">
+            <summary>
+            User name of bot registered on Telegram
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotOptions`1.WebhookUrl">
+            <summary>
+            Url to be used for webhook
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotOptions`1.PathToCertificate">
+            <summary>
+            Path to TLS certificate file. The .pem public key file used for encrypting and authenticating webhooks
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.BotOptions`1.GameOptions">
+            <summary>
+            Array of options for this bot's games
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.CommandBase`1">
+            <summary>
+            Base class for the bot commands
+            </summary>
+            <typeparam name="TCommandArgs">Type of the command argument this command accepts</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.CommandBase`1.Name">
+            <summary>
+            Command name without leading '/'
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.CommandBase`1.Bot">
+            <summary>
+            Instance of the bot this command is operating for
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.#ctor(System.String)">
+            <summary>
+            Initializes a new bot command with specified command name
+            </summary>
+            <param name="name">This command's name without leading '/'</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.CanHandleUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Indicates whether this handler should receive the update for handling by quickly checking the update type such as text, photo, or etc.
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">Update for the bot</param>
+            <returns><value>true</value> if this handler should get the update; otherwise <value>false</value></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.HandleUpdateAsync(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Handles the update for bot. This method will be called only if CanHandleUpdate returns <value>true</value>
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">The update to be handled</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.ParseInput(Telegram.Bot.Types.Update)">
+            <summary>
+            Parses the text input of update into this command's arguments
+            </summary>
+            <param name="update">Update to be parsed</param>
+            <returns>Instance of this command's arguments</returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.CanHandleCommand(Telegram.Bot.Types.Update)">
+            <summary>
+            Indicates whether this command wants to handle the update by quickly checking the update type such as text, photo, or etc.
+            </summary>
+            <param name="update">The update to be handled</param>
+            <returns><value>true</value> if this command should handle the update; otherwise <value>false</value></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.CommandBase`1.HandleCommand(Telegram.Bot.Types.Update,`0)">
+            <summary>
+            Handle the command update
+            </summary>
+            <param name="update">Command update to be handled</param>
+            <param name="args">Command arguments</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Extensions.ConfigurationException">
+            <summary>
+            Represents errors in Telegram Bot Configurations 
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Extensions.ConfigurationException.#ctor">
+            <summary>
+            Initializes a configuration exception with default values
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Extensions.ConfigurationException.#ctor(System.String)">
+            <summary>
+            Initializes a configuration exception with the specified message
+            </summary>
+            <param name="message">Message for the occured error</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Extensions.ConfigurationException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a configuration exception with specified message and a hint for possible fix
+            </summary>
+            <param name="message">Message for the occured error</param>
+            <param name="hint">A hint for fixing the error</param>
+        </member>
+        <member name="T:Telegram.Bot.Framework.TelegramBotMiddlewareExtensions">
+            <summary>
+            Extentions for adding Telegram Bot framework to the ASP.NET Core middleware
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.TelegramBotMiddlewareExtensions.UseTelegramBotWebhook``1(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Boolean)">
+            <summary>
+            Add Telegram bot webhook handling functionality to the pipeline
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+            <param name="app">Instance of IApplicationBuilder</param>
+            <param name="ensureWebhookEnabled">Whether to set the webhook immediately by making a request to Telegram bot API</param>
+            <returns>Instance of IApplicationBuilder</returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.TelegramBotMiddlewareExtensions.UseTelegramBotLongPolling``1(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Boolean)">
+            <summary>
+            Removes and disables webhooks for bot
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+            <param name="app">Instance of IApplicationBuilder</param>
+            <param name="ensureWebhookDisabled">If true, a request is immediately made to delete webhook</param>
+            <returns>Instance of IApplicationBuilder</returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.TelegramBotMiddlewareExtensions.UseTelegramGame``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Add a Telegram game score middleware to the app
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+            <param name="app">Instance of IApplicationBuilder</param>
+            <returns>Instance of IApplicationBuilder</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.GameHandlerBase">
+            <summary>
+            Base class for bot's games
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.GameHandlerBase.ShortName">
+            <summary>
+            Game's short name
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.GameHandlerBase.Options">
+            <summary>
+            Game configuration options
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.GameHandlerBase.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Initializes a new instance of game handler
+            </summary>
+            <param name="protectionProvider"></param>
+            <param name="shortName">Game's short name</param>
+            <param name="logger">An instance of logger</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.GameHandlerBase.CanHandleUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Indicates whether this handler should receive the update for handling by quickly checking the update type such as text, photo, or etc.
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">Update for the bot</param>
+            <returns><value>true</value> if this handler should get the update; otherwise <value>false</value></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.GameHandlerBase.HandleUpdateAsync(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Handles the update for bot. This method will be called only if CanHandleUpdate returns <value>true</value>
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">The update to be handled</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.GameHandlerBase.SetGameScoreAsync(Telegram.Bot.Framework.Abstractions.IBot,System.String,System.Int32)">
+            <summary>
+            Set game score for user based on encrypted playerid
+            </summary>
+            <param name="bot">Instance of the bot</param>
+            <param name="playerid">Encoded and protected player id</param>
+            <param name="score">User's score</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.GameHandlerBase.GetHighestScoresAsync(Telegram.Bot.Framework.Abstractions.IBot,System.String)">
+            <summary>
+            Get game scores for chat based on encrypted playerid
+            </summary>
+            <param name="bot">Instance of the bot</param>
+            <param name="playerid">Encoded and protected player id</param>
+            <returns>Array of scores for chat</returns>
+        </member>
+        <member name="P:Telegram.Bot.Framework.IInternalBotManager`1.BotGameOptions">
+            <summary>
+            Array of game options for this bot's games
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.IInternalBotManager`1.Bot">
+            <summary>
+            Instance of bot under management
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.IInternalBotManager`1.TryFindGameHandler(System.String)">
+            <summary>
+            Finds a handler for game by its short name
+            </summary>
+            <param name="gameShortName">Game's short name</param>
+            <returns>
+            A tuple with Success indicating presense of a game handler, and GameHandler, instance of
+            game handler for that game
+            </returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.IInternalBotManager`1.ReplaceGameUrlTokens(System.String,System.String)">
+            <summary>
+            Replaces tokens, if any, in a game url
+            </summary>
+            <param name="urlFormat">A url with possibly tokens such as {game}</param>
+            <param name="gameShortName">Game's short name</param>
+            <returns>A url with all tokens replaced by their respective values</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Middlewares.TelegramBotMiddleware`1">
+            <summary>
+            Middleware for handling Telegram bot's webhook requests
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Middlewares.TelegramBotMiddleware`1.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Telegram.Bot.Framework.Abstractions.IBotManager{`0},Microsoft.Extensions.Logging.ILogger{Telegram.Bot.Framework.Middlewares.TelegramBotMiddleware{`0}})">
+            <summary>
+            Initializes an instance of middleware
+            </summary>
+            <param name="next">Instance of request delegate</param>
+            <param name="botManager">Bot manager for the bot</param>
+            <param name="logger">Logger for this middleware</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Middlewares.TelegramBotMiddleware`1.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Gets invoked to handle the incoming request
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Telegram.Bot.Framework.Middlewares.TelegramGameScoreMiddleware`1">
+            <summary>
+            Middleware for handling Telegram games' scores requests
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Middlewares.TelegramGameScoreMiddleware`1.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Telegram.Bot.Framework.Abstractions.IBotManager{`0},Microsoft.Extensions.Logging.ILogger{Telegram.Bot.Framework.Middlewares.TelegramGameScoreMiddleware{`0}})">
+            <summary>
+            Initializes an instance of middleware
+            </summary>
+            <param name="next">Instance of request delegate</param>
+            <param name="botManager">Bot manager for the bot</param>
+            <param name="logger">Logger for this middleware</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.Middlewares.TelegramGameScoreMiddleware`1.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Gets invoked to handle the incoming request
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Telegram.Bot.Framework.SetGameScoreDto">
+            <summary>
+            Data transfer object containing user's score
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.SetGameScoreDto.PlayerId">
+            <summary>
+            Encoded and encrypted player id
+            </summary>
+        </member>
+        <member name="P:Telegram.Bot.Framework.SetGameScoreDto.Score">
+            <summary>
+            User's score
+            </summary>
+        </member>
+        <member name="T:Telegram.Bot.Framework.UpdateHandlerBase">
+            <summary>
+            Base class for Telegram bot update handlers
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.UpdateHandlerBase.CanHandleUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Indicates whether this handler should receive the update for handling by quickly checking the update type such as text, photo, or etc.
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">Update for the bot</param>
+            <returns><value>true</value> if this handler should get the update; otherwise <value>false</value></returns>
+        </member>
+        <member name="M:Telegram.Bot.Framework.UpdateHandlerBase.HandleUpdateAsync(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Handles the update for bot. This method will be called only if CanHandleUpdate returns <value>true</value>
+            </summary>
+            <param name="bot">Instance of the bot this command is operating for</param>
+            <param name="update">The update to be handled</param>
+            <returns>Result of handling this update</returns>
+        </member>
+        <member name="T:Telegram.Bot.Framework.UpdateHanldersAccessor`1">
+            <summary>
+            Provides a list of update handlers for the bot
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.UpdateHanldersAccessor`1.UpdateHandlers">
+            <summary>
+            Gets a list of update handlers for the bot
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.UpdateHanldersAccessor`1.#ctor(System.Collections.Generic.IEnumerable{Telegram.Bot.Framework.Abstractions.IUpdateHandler})">
+            <summary>
+            Initializes the accessor with a list of update handlers
+            </summary>
+            <param name="handlers">List of update handlers for the bot</param>
+        </member>
+        <member name="T:Telegram.Bot.Framework.UpdateParser`1">
+            <summary>
+            Responsible for quickly parsing the updates and finding the handlers for them
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="P:Telegram.Bot.Framework.UpdateParser`1.UpdateHandlers">
+            <summary>
+            List of all available 
+            </summary>
+        </member>
+        <member name="M:Telegram.Bot.Framework.UpdateParser`1.#ctor(Telegram.Bot.Framework.Abstractions.IUpdateHandlersAccessor{`0})">
+            <summary>
+            Initializes and instance with the provided handler acessor
+            </summary>
+            <param name="handlersAccessor">Update handler accessor for the bot</param>
+        </member>
+        <member name="M:Telegram.Bot.Framework.UpdateParser`1.FindHandlersForUpdate(Telegram.Bot.Framework.Abstractions.IBot,Telegram.Bot.Types.Update)">
+            <summary>
+            Finds update handlers for this specific bot update
+            </summary>
+            <param name="bot">Instance of bot</param>
+            <param name="update">Update to be checked for handling</param>
+            <returns>List of update handlers for the bot able to handle that update</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions">
+            <summary>
+            Extensoin methods for adding a Telegram Bot to an Microsoft.Extensions.DependencyInjection.IServiceCollection
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.AddTelegramBot``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Telegram.Bot.Framework.BotOptions{``0})">
+            <summary>
+            Adds a Telegram bot to the service collection using the bot's options
+            </summary>
+            <typeparam name="TBot">Type of Telegarm bot</typeparam>
+            <param name="services">Instance of IServiceCollection</param>
+            <param name="botOptions">Optins for configuring the bot</param>
+            <returns>Instance of bot framework builder</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.AddTelegramBot``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adds a Telegram bot to the service collection using configurations
+            </summary>
+            <typeparam name="TBot">Type of Telegarm bot</typeparam>
+            <param name="services">Instance of IServiceCollection</param>
+            <param name="config">Configuring for the bot</param>
+            <returns>Instance of bot framework builder</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder`1">
+            <summary>
+            Responsible for configuring services for the bot and adding them to the container
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder`1.AddUpdateHandler``1">
+            <summary>
+            Configures an update handler for the bot
+            </summary>
+            <typeparam name="T">Type of update handler</typeparam>
+            <returns>Itself</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder`1.Configure">
+            <summary>
+            Completes the configuration for the bot and adds all the services
+            </summary>
+            <returns>Instance of IServiceCollection</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.TelegramBotFrameworkBuilder`1">
+            <summary>
+            Responsible for configuring services for the bot and adding them to the container
+            </summary>
+            <typeparam name="TBot">Type of bot</typeparam>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.TelegramBotFrameworkBuilder`1.#ctor(Telegram.Bot.Framework.BotOptions{`0})">
+            <summary>
+            Initializes and instance of this class with the options provided
+            </summary>
+            <param name="botOptions">Optoins for the bot</param>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.TelegramBotFrameworkBuilder`1.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes and instance of this class with the configuration provided
+            </summary>
+            <param name="configuration">Configuration for the bot</param>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.TelegramBotFrameworkBuilder`1.AddUpdateHandler``1">
+            <summary>
+            Configures an update handler for the bot
+            </summary>
+            <typeparam name="T">Type of update handler</typeparam>
+            <returns>Itself</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.TelegramBotFrameworkIServiceCollectionExtensions.TelegramBotFrameworkBuilder`1.Configure">
+            <summary>
+            Completes the configuration for the bot and adds all the services
+            </summary>
+            <returns>Instance of IServiceCollection</returns>
+        </member>
+    </members>
+</doc>

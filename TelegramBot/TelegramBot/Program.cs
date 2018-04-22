@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ using System.Web;
 using System.Linq;
 using System.Globalization;
 
-namespace TelegramBot
+namespace Jarvis
 {
 	class JSON
 	{
@@ -40,7 +41,7 @@ namespace TelegramBot
 			return result;
 		}
 	}
-	class SendMail
+	class Mail
 	{
 		public static void SendEmail(string receiverMailAddress, string SubjectMail, string TextMail, string AttachmentPath = "")
 		{
@@ -68,11 +69,11 @@ namespace TelegramBot
 		}
 	}
 
-	class Translate
+	class Interpreter
 	{
 		private static string YandeksTranslateApi = "trnsl.1.1.20180412T210918Z.108398f712de403d.4ec44652eeddac18d8e8a9a60d8674bb11196c5b";
 
-		public static string translate(string text, string FromLang, string ToLang)
+		public static string Translate(string text, string FromLang, string ToLang)
 		{
 			string request = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=" + YandeksTranslateApi + 
 				"&text=" + text + "&lang=" + FromLang + "-" + ToLang;
@@ -146,14 +147,13 @@ namespace TelegramBot
 
 	}
 
-	class NowTime
+	class Time
 	{
 		public static string getTime()
 		{
 			string result = "";
 			DateTime localDate = DateTime.Now;
-			String[] cultureNames = { "en-US", "en-GB", "fr-FR",
-				"de-DE", "ru-RU" };
+			String[] cultureNames = { "en-US", "en-GB", "fr-FR", "de-DE", "ru-RU" };
 
 			foreach (var cultureName in cultureNames) {
 				var culture = new CultureInfo(cultureName);
@@ -168,7 +168,9 @@ namespace TelegramBot
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine (Weather.getWeatherFromWebRequest("Simferopol"));
+			string text = Console.ReadLine ();
+			int step = Convert.ToInt32(Console.ReadLine ());
+			Console.WriteLine (Codings.XOR(text, step));
 		}
 	}
 }

@@ -1,8 +1,11 @@
 ﻿<Properties StartupItem="TelegramBot/JarvisBot.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TelegramBot/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TelegramBot/Codings.cs">
     <Files>
-      <File FileName="TelegramBot/Program.cs" Line="112" Column="18" />
+      <File FileName="TelegramBot/Program.cs" Line="1" Column="1" />
+      <File FileName="TelegramBot/Codings.cs" Line="25" Column="5" />
+      <File FileName="TelegramBot/BrootHash.cs" Line="8" Column="3" />
+      <File FileName="TelegramBot/PersonDiscord.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

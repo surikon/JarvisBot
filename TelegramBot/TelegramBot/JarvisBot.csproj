@@ -41,6 +41,10 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PersonDiscord.cs" />
+    <Compile Include="BrootHash.cs" />
+    <Compile Include="Codings.cs" />
+    <Compile Include="MyRSAClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
